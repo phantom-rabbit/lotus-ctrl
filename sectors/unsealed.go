@@ -42,7 +42,7 @@ var reversalUnsealedCmd = &cli.Command{
 		offset := abi.PaddedPieceSize(cctx.Int64("offset"))
 		size := abi.PaddedPieceSize(cctx.Int64("size"))
 
-		log.Debugf("Check local %s (+%d,%d)", unsealedPath, offset, size)
+		log.Infof("Check local %s (+%d,%d)", unsealedPath, offset, size)
 
 		pf, err := partialfile.OpenPartialFile(size, unsealedPath)
 		if err != nil {
