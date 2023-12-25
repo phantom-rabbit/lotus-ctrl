@@ -35,6 +35,10 @@ var reversalUnsealedCmd = &cli.Command{
 			Name:  "size",
 			Value: 32 << 30,
 		},
+		&cli.Int64Flag{
+			Name:     "car-size",
+			Required: true,
+		},
 	},
 	Action: func(cctx *cli.Context) error {
 		unsealedPath := cctx.String("path")
@@ -59,8 +63,8 @@ var reversalUnsealedCmd = &cli.Command{
 		if !allocated {
 			return fmt.Errorf("miner has unsealed file but not unseal piece, %s (+%d,%d)", unsealedPath, offset, size)
 		}
-
-		reader, err := pf.Reader(0, size)
+		car_size := cctx.Int64("car-size")
+		reader, err := pf.Reader(0, abi.PaddedPieceSize(car_size-(car_size/128)))
 		if err != nil {
 			return err
 		}
